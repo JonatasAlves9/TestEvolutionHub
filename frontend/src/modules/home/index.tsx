@@ -12,13 +12,16 @@ interface Character {
 export const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [characters, setCharacters] = useState<Character[]>();
-
+    const [error, setError] = useState('');
     useEffect(() => {
         fetch('https://rickandmortyapi.com/api/character')
             .then(response => response.json())
             .then(data => {
                 setCharacters(data.results);
                 setIsLoading(false);
+                if(data.error){
+                    setError('Failed to load character data.')
+                }
             })
             .catch(error => {
                 console.error('Error fetching characters:', error);
@@ -29,6 +32,8 @@ export const Home = () => {
     return (
         <Container>
             <Text>Welcome to the Home Page</Text>
+            <Text>{error}</Text>
+
             <Box>
                 {isLoading ? (
                     <Box data-testid="loading-indicator">Loading...</Box>
@@ -49,5 +54,4 @@ export const Home = () => {
             </Box>
         </Container>
     )
-        ;
 };

@@ -18,7 +18,6 @@ afterAll(() => server.close());
 test('displays character names after loading', async () => {
     render(<Home/>);
 
-    // Aguarde até que os dados sejam carregados e os personagens sejam exibidos
     await screen.findByText('Rick');
 
     const characterName = screen.getByText('Rick');
@@ -41,3 +40,4 @@ test('displays loading indicator on page refresh', () => {
 
     expect(loadingIndicator).toBeInTheDocument();
 });
+
