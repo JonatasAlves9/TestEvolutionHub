@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {TextInput, Button} from '@react-native-material/core';
 
-const LoginScreen = () => {
+interface IProps {
+    handleLogin: (email: string, password: string) => void;
+}
+const LoginScreen = ({handleLogin}: IProps) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        // Lógica de autenticação aqui
-    };
 
     return (
         <View style={styles.container}>
@@ -25,7 +25,7 @@ const LoginScreen = () => {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <Button onPress={handleLogin} title={'Login'}/>
+            <Button onPress={() => handleLogin(username, password)} title={'Login'}/>
         </View>
     );
 };
