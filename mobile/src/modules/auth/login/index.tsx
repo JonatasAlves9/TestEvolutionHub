@@ -1,17 +1,19 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {TextInput, Button} from '@react-native-material/core';
+import {TextInput, Button, HStack, Banner} from '@react-native-material/core';
 
 interface IProps {
     handleLogin: (email: string, password: string) => void;
 }
+
 const LoginScreen = ({handleLogin}: IProps) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const [error, setError] = useState('');
 
     return (
         <View style={styles.container}>
+
             <TextInput
                 label="Username"
                 value={username}
@@ -25,7 +27,27 @@ const LoginScreen = ({handleLogin}: IProps) => {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-            <Button onPress={() => handleLogin(username, password)} title={'Login'}/>
+            <Button onPress={() => {
+                if (username === 'jonatas' && password === '123456') {
+                    setError('');
+                    handleLogin(username, password)
+                } else {
+                    setError('Invalid credentials. Please try again.');
+                }
+            }} title={'Login'} />
+            {
+                error && (
+                    <Banner
+                        text={error}
+                        buttons={
+                            <HStack spacing={2}>
+                                <Button onPress={() => setError('')} key="learn-more" variant="text" title="Dimiss" compact/>
+                            </HStack>
+                        }
+                    />
+                )
+            }
+
         </View>
     );
 };
